@@ -8,3 +8,5 @@ yarn-error.log*
 coverage
 *.log
 .*.log
+__pycache__/
+*.pyc
