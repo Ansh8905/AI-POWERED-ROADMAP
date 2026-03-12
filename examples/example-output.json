@@ -1,0 +1,73 @@
+{
+  "title": "AI Engineer Career Roadmap",
+  "overview": "This roadmap takes a beginner learner with web fundamentals toward an AI Engineer role through progressive skill building in Python, machine learning, LLM integration, deployment, and portfolio development.",
+  "phases": [
+    {
+      "name": "Foundation",
+      "topics": [
+        "Python programming fundamentals",
+        "Data structures for ML workflows",
+        "Math for machine learning",
+        "Version control with Git and GitHub"
+      ],
+      "resources": [
+        "Python official tutorial",
+        "Hands-on beginner ML course",
+        "Project-based notebook exercises"
+      ],
+      "projects": [
+        "Build a data cleaning and visualization notebook",
+        "Create a CLI tool that preprocesses CSV datasets"
+      ],
+      "milestone": "Complete two Python projects and confidently explain core Python syntax, functions, and data handling."
+    },
+    {
+      "name": "Machine Learning Core",
+      "topics": [
+        "Supervised and unsupervised learning",
+        "Model evaluation metrics",
+        "Feature engineering",
+        "Scikit-learn workflows"
+      ],
+      "resources": [
+        "Scikit-learn documentation",
+        "Kaggle micro-courses",
+        "Weekly model evaluation practice"
+      ],
+      "projects": [
+        "Train and compare classification models on a real dataset",
+        "Publish an end-to-end ML project with README and results"
+      ],
+      "milestone": "Ship one reproducible ML project with clear evaluation metrics and documented tradeoffs."
+    },
+    {
+      "name": "LLM and Deployment",
+      "topics": [
+        "Prompt engineering",
+        "LLM API integration",
+        "Vector databases and retrieval",
+        "Model deployment basics"
+      ],
+      "resources": [
+        "OpenAI or Claude API docs",
+        "RAG architecture tutorials",
+        "Deployment walkthroughs"
+      ],
+      "projects": [
+        "Build an AI-powered document Q&A app",
+        "Deploy a roadmap generator with a backend API and frontend UI"
+      ],
+      "milestone": "Deploy a usable AI application that integrates an LLM, handles structured outputs, and includes monitoring basics."
+    }
+  ],
+  "marketTrends": [
+    "AI Engineer roles increasingly expect LLM application development plus software engineering discipline.",
+    "Employers value candidates who can connect model outputs to production-ready APIs and user-facing products.",
+    "Retrieval-augmented generation, evaluation, and deployment reliability remain common hiring themes."
+  ],
+  "professionalTips": [
+    "Keep a portfolio that demonstrates both experimentation and production thinking.",
+    "Write post-project reflections that explain technical decisions and tradeoffs.",
+    "Study job descriptions regularly and adapt your stack toward the most repeated tools and workflows."
+  ]
+}
