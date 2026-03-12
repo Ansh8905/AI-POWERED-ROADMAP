@@ -16,6 +16,9 @@ You are an expert AI career coach and curriculum architect.
 
 Analyze this learner profile:
 - Track type: ${input.pathType || 'tech'}
+- Academic stage: ${input.academicStage || 'N/A'}
+- Board stream: ${input.boardStream || 'N/A'}
+- Selected academic/career option: ${input.selectedCareerOption || 'None selected'}
 - Current skills: ${analysis.normalizedSkills.join(', ') || 'None provided'}
 - Experience level: ${input.experienceLevel}
 - Career goal: ${input.careerGoal}
@@ -46,6 +49,8 @@ Requirements:
 - Include concrete topics, practical resources, and portfolio-worthy projects or practice tasks.
 - Prefer official documentation, vendor guides, and widely trusted educational sources in the resource suggestions.
 - If the track is non-tech, adapt the roadmap for exams or academic preparation using syllabus coverage, mock tests, revision strategy, and official portals.
+- If the learner is in board-exam mode, tailor the roadmap to their current class and stream preference.
+- If a selected academic/career option is present, phase names, topics, resources, projects, and milestones must align directly with that option.
 - For non-tech tracks, use the "projects" field for practice tasks such as mock tests, answer-writing drills, case analysis, or revision deliverables.
 - Ensure milestones are measurable.
 - Keep marketTrends and professionalTips concise but useful.

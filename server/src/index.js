@@ -43,7 +43,10 @@ app.post('/generate-roadmap', async (request, response) => {
       currentSkills: request.body.currentSkills,
       experienceLevel: request.body.experienceLevel,
       careerGoal: request.body.careerGoal,
-      learningPreferences: request.body.learningPreferences
+      learningPreferences: request.body.learningPreferences,
+      academicStage: request.body.academicStage || '10th',
+      boardStream: request.body.boardStream || 'Not decided',
+      selectedCareerOption: request.body.selectedCareerOption || ''
     };
 
     const analysis = analyzeProfile(input);
@@ -57,7 +60,8 @@ app.post('/generate-roadmap', async (request, response) => {
         warning: result.warning || null,
         skillGaps: analysis.skillGaps,
         targetSkills: analysis.targetSkills,
-        profileSummary: analysis.summary
+        profileSummary: analysis.summary,
+        selectedCareerOption: input.selectedCareerOption || null
       }
     });
   } catch (error) {

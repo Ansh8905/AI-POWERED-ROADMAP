@@ -8,7 +8,10 @@ const initialForm = {
   currentSkills: 'JavaScript, HTML, CSS',
   experienceLevel: 'Beginner',
   careerGoal: 'AI Engineer',
-  learningPreferences: 'Project-based learning, visual explanations, and weekly milestones.'
+  learningPreferences: 'Project-based learning, visual explanations, and weekly milestones.',
+  academicStage: '10th',
+  boardStream: 'Maths',
+  selectedCareerOption: ''
 };
 
 function App() {
@@ -18,15 +21,14 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function fetchRoadmap(nextFormValues) {
     setIsLoading(true);
     setError('');
 
     try {
       const payload = {
-        ...formValues,
-        currentSkills: formValues.currentSkills
+        ...nextFormValues,
+        currentSkills: nextFormValues.currentSkills
           .split(',')
           .map((skill) => skill.trim())
           .filter(Boolean)
@@ -53,6 +55,21 @@ function App() {
     } finally {
       setIsLoading(false);
     }
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    await fetchRoadmap(formValues);
+  }
+
+  async function handleCareerOptionSelect(optionTitle) {
+    const nextFormValues = {
+      ...formValues,
+      selectedCareerOption: optionTitle
+    };
+
+    setFormValues(nextFormValues);
+    await fetchRoadmap(nextFormValues);
   }
 
   return (
@@ -180,7 +197,14 @@ function App() {
 
         {isLoading ? <LoadingState /> : null}
 
-        {roadmap ? <RoadmapView roadmap={roadmap} meta={meta} /> : null}
+        {roadmap ? (
+          <RoadmapView
+            roadmap={roadmap}
+            meta={meta}
+            onCareerOptionSelect={handleCareerOptionSelect}
+            selectedCareerOption={formValues.selectedCareerOption}
+          />
+        ) : null}
       </div>
     </main>
   );

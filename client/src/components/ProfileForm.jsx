@@ -1,4 +1,6 @@
 const experienceLevels = ['Beginner', 'Intermediate', 'Advanced'];
+const academicStages = ['10th', '11th', '12th'];
+const boardStreams = ['Maths', 'Science', 'Commerce', 'Humanities', 'Not decided'];
 
 const trackGroups = {
   tech: {
@@ -84,11 +86,14 @@ function ProfileForm({ formValues, setFormValues, handleSubmit, isLoading }) {
   const activeTrack = trackGroups[formValues.pathType] || trackGroups.tech;
   const activeOption =
     activeTrack.options.find((option) => option.value === formValues.careerGoal) || activeTrack.options[0];
+  const isBoardExamFlow = formValues.pathType === 'non-tech' && formValues.careerGoal === 'Board Exams';
 
   function updateField(field, value) {
     setFormValues((current) => ({
       ...current,
-      [field]: value
+      [field]: value,
+      selectedCareerOption:
+        field === 'academicStage' || field === 'boardStream' ? '' : current.selectedCareerOption
     }));
   }
 
@@ -100,7 +105,20 @@ function ProfileForm({ formValues, setFormValues, handleSubmit, isLoading }) {
       pathType,
       careerGoal: nextTrack.options.some((option) => option.value === current.careerGoal)
         ? current.careerGoal
-        : nextTrack.options[0].value
+        : nextTrack.options[0].value,
+      academicStage: current.academicStage || '10th',
+      boardStream: current.boardStream || 'Maths',
+      selectedCareerOption: ''
+    }));
+  }
+
+  function updateCareerGoal(careerGoal) {
+    setFormValues((current) => ({
+      ...current,
+      careerGoal,
+      academicStage: current.academicStage || '10th',
+      boardStream: current.boardStream || 'Maths',
+      selectedCareerOption: ''
     }));
   }
 
@@ -124,6 +142,11 @@ function ProfileForm({ formValues, setFormValues, handleSubmit, isLoading }) {
             <p className="text-sm leading-6 text-slate-600">
               Pick a track, choose the exact focus area, then describe your background and learning preferences.
             </p>
+            {isBoardExamFlow && formValues.selectedCareerOption ? (
+              <div className="inline-flex w-fit rounded-full bg-white px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-cobalt shadow-sm">
+                Selected path: {formValues.selectedCareerOption}
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -171,7 +194,7 @@ function ProfileForm({ formValues, setFormValues, handleSubmit, isLoading }) {
                 <button
                   key={option.value}
                   type="button"
-                  onClick={() => updateField('careerGoal', option.value)}
+                  onClick={() => updateCareerGoal(option.value)}
                   className={`rounded-[22px] border px-4 py-4 text-left transition ${
                     isSelected
                       ? 'border-ink bg-ink text-white shadow-panel'
@@ -187,6 +210,43 @@ function ProfileForm({ formValues, setFormValues, handleSubmit, isLoading }) {
             })}
           </div>
         </section>
+
+        {isBoardExamFlow ? (
+          <section className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-[24px] border border-slate-200 bg-white p-4">
+              <FieldLabel title="Current class" hint="Used for career suggestions" />
+              <select
+                value={formValues.academicStage}
+                onChange={(event) => updateField('academicStage', event.target.value)}
+                className="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium text-ink outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10"
+              >
+                {academicStages.map((stage) => (
+                  <option key={stage} value={stage}>
+                    {stage}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="rounded-[24px] border border-slate-200 bg-white p-4">
+              <FieldLabel
+                title={formValues.academicStage === '10th' ? 'Preferred stream after 10th' : 'Current stream'}
+                hint="Career options filter"
+              />
+              <select
+                value={formValues.boardStream}
+                onChange={(event) => updateField('boardStream', event.target.value)}
+                className="h-12 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 text-sm font-medium text-ink outline-none transition focus:border-cobalt focus:ring-4 focus:ring-cobalt/10"
+              >
+                {boardStreams.map((stream) => (
+                  <option key={stream} value={stream}>
+                    {stream}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </section>
+        ) : null}
 
         <section className="grid gap-4 sm:grid-cols-2">
           <div className="rounded-[24px] border border-slate-200 bg-white p-4">

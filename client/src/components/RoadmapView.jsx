@@ -123,7 +123,58 @@ function ProgressTracker({ phases }) {
   );
 }
 
-function RoadmapView({ roadmap, meta }) {
+function CareerOptionCard({ option, onSelect, isActive }) {
+  return (
+    <div
+      className={`rounded-[20px] border p-4 transition duration-200 hover:-translate-y-0.5 ${
+        isActive
+          ? 'border-ink bg-ink text-white shadow-panel'
+          : 'border-slate-200 bg-slate-50/90 hover:border-slate-300 hover:bg-white'
+      }`}
+    >
+      <div className="flex flex-wrap items-center gap-2">
+        <span
+          className={`rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] shadow-sm ${
+            isActive ? 'bg-white/15 text-slate-100' : 'bg-white text-slate-500'
+          }`}
+        >
+          {option.type}
+        </span>
+      </div>
+      <h4 className={`mt-3 text-lg font-semibold ${isActive ? 'text-white' : 'text-ink'}`}>{option.title}</h4>
+      <p className={`mt-3 text-sm leading-6 ${isActive ? 'text-slate-200' : 'text-slate-600'}`}>{option.fit}</p>
+      <div className={`mt-4 rounded-[16px] border px-3 py-3 ${isActive ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white'}`}>
+        <p className={`text-xs font-semibold uppercase tracking-[0.18em] ${isActive ? 'text-slate-300' : 'text-slate-400'}`}>Next step</p>
+        <p className={`mt-2 text-sm leading-6 ${isActive ? 'text-slate-200' : 'text-slate-600'}`}>{option.nextStep}</p>
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {option.outcomes.map((outcome) => (
+          <span
+            key={`${option.title}-${outcome}`}
+            className={`rounded-full px-3 py-1.5 text-xs font-medium shadow-sm ${
+              isActive ? 'bg-white/10 text-slate-100' : 'bg-white text-slate-600'
+            }`}
+          >
+            {outcome}
+          </span>
+        ))}
+      </div>
+      <button
+        type="button"
+        onClick={() => onSelect(option.title)}
+        className={`mt-4 inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition ${
+          isActive
+            ? 'bg-white text-ink hover:bg-slate-100'
+            : 'bg-ink text-white hover:bg-slate-900'
+        }`}
+      >
+        {isActive ? 'Active roadmap path' : 'Use this option'}
+      </button>
+    </div>
+  );
+}
+
+function RoadmapView({ roadmap, meta, onCareerOptionSelect, selectedCareerOption }) {
   const totalStudySources = roadmap.phases.reduce(
     (count, phase) => count + (phase.studyContent?.length || 0),
     0
@@ -167,6 +218,35 @@ function RoadmapView({ roadmap, meta }) {
           <ProgressTracker phases={roadmap.phases} />
         </div>
       </SurfaceCard>
+
+      {roadmap.careerExplorer ? (
+        <SurfaceCard eyebrow="Career explorer" title={roadmap.careerExplorer.title}>
+          <p className="mt-4 max-w-4xl text-sm leading-7 text-slate-600">
+            {roadmap.careerExplorer.description}
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Class {roadmap.careerExplorer.stage}
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Stream {roadmap.careerExplorer.stream}
+            </span>
+            <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+              {roadmap.careerExplorer.options.length} options
+            </span>
+          </div>
+          <div className="mt-5 grid gap-3 lg:grid-cols-2 xl:grid-cols-3">
+            {roadmap.careerExplorer.options.map((option) => (
+              <CareerOptionCard
+                key={option.title}
+                option={option}
+                onSelect={onCareerOptionSelect}
+                isActive={option.isSelected || option.title === selectedCareerOption}
+              />
+            ))}
+          </div>
+        </SurfaceCard>
+      ) : null}
 
       <div className="grid gap-5 2xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="grid gap-6">
