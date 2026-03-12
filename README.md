@@ -28,6 +28,7 @@ AI ROADMAP PROJECT/
 |-- server/
 |   |-- src/
 |   |   |-- services/
+|   |   |   |-- academicPaths.js
 |   |   |   |-- llmService.js
 |   |   |   `-- roadmapEngine.js
 |   |   `-- index.js
@@ -35,6 +36,8 @@ AI ROADMAP PROJECT/
 |   `-- package.json
 |-- .gitignore
 |-- package.json
+|-- requirements.txt
+|-- streamlit_app.py
 `-- README.md
 ```
 
@@ -46,8 +49,10 @@ AI ROADMAP PROJECT/
 - Express API endpoint at `/generate-roadmap`
 - Prompt engineering and structured JSON generation
 - Trusted source recommendations filtered by learner level, role, and roadmap phase
+- Board exam and post-10th career explorer for non-tech learners
 - JSON extraction, parsing, validation, and error handling
 - Fallback roadmap generation when no LLM API key is configured
+- Streamlit app for easy cloud deployment
 
 ## Local Setup
 
@@ -72,6 +77,34 @@ npm run dev
 ```
 
 5. Open the frontend at `http://localhost:5173`.
+
+## Streamlit Run
+
+Run the Streamlit version locally:
+
+```bash
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+## Streamlit Deployment
+
+This repo is ready for Streamlit Community Cloud deployment.
+
+1. Push the repo to GitHub.
+2. Open Streamlit Community Cloud and choose `New app`.
+3. Select this repository: `Ansh8905/AI-POWERED-ROADMAP`
+4. Set the main file path to `streamlit_app.py`
+5. Add secrets if you want live LLM responses:
+
+```toml
+OPENAI_API_KEY="your_key_here"
+OPENAI_MODEL="gpt-4.1-mini"
+```
+
+6. Deploy the app.
+
+If no OpenAI key is provided, the app still works with the built-in fallback roadmap generator.
 
 ## Environment Variables
 
